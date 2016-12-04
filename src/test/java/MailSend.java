@@ -1,0 +1,32 @@
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import webSource.Example;
+import webSource.jms.ReceiveMessage;
+import webSource.jms.SendMessage;
+
+/**
+ * Created by Administrator on 2016/12/1.
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(Example.class)
+public class MailSend {
+
+    @Autowired
+    JavaMailSender mailSender;
+
+    @Test
+    public void sendSimpleMail() throws Exception {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("1468195034@qq.com");
+        message.setTo("1731857742@qq.com");
+        message.setSubject("主题：简单邮件");
+        message.setText("测试邮件内容");
+        mailSender.send(message);
+        System.out.println("this is test");
+    }
+}
