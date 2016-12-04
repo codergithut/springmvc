@@ -30,7 +30,7 @@ public class JdbcTest {
         List<Object> data=new ArrayList<Object>();
         Object user=jdbcTemplate.queryForList(TEST_SQL);
 
-//         这段代码有误待研究 现在可以获取某一列的值
+//         这段代码有误待研究 现在可以获取某一列的值kkk;lk;l
         String s=jdbcTemplate.queryForObject(TEST_SQL1,String.class);
 
 //        这段代码有误待研究 现在可以获取某一列的很多值
