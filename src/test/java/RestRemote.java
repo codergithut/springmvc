@@ -26,7 +26,7 @@ public class RestRemote {
 
 
     /**
-     * 基本测试通过但是配置测试未通过
+     * 基本测试通过但是配置测试未通过ssssfsfasf
      * 测试失败按逻辑上来说会取消连接的创建但是然并卵代码为RestBean 27 ; ProxyCustomizer 35
      */
     @Test
