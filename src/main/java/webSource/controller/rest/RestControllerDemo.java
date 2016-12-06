@@ -1,15 +1,18 @@
 package webSource.controller.rest;
 
-
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import webSource.jpa.repository.JpaRepositoryBean;
+import webSource.tool.GetUrlResource;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,9 +41,13 @@ public class RestControllerDemo {
     JavaMailSender mailSender;
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
-    public List<Object> getUser(@PathVariable Long id) {
+    public List<Object> getUser(@PathVariable Long id) throws IOException {
 
         List<Object> users=new ArrayList<Object>();
+
+        GetUrlResource getResource=new GetUrlResource();
+
+        users.add(getResource.getWealthByUrlResource());
 
         users.add(testRepository.readUserByQueryAndCache(id));
 
