@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.Map;
+
 
 /**
  * Created by Administrator on 2016/11/29.
@@ -27,8 +29,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MyTemplateController {
 
     @RequestMapping(value="", method= RequestMethod.GET)
-    public String getUser() {
-        return "index";
+    public String getUser(Map<String,Object> model) {
+        model.put("name","tianjian");
+        model.put("password","tianjian");
+        return "template";
     }
 
 }
