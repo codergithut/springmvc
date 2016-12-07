@@ -18,7 +18,7 @@ import java.util.List;
 @SpringApplicationConfiguration(Example.class)
 public class JdbcTest {
 
-    static String TEST_SQL="select id,name,sex from users where id = 1";
+    static String TEST_SQL="select id,name,password from users where id = 1";
 
     static String TEST_SQL1="select id from users where id = 1";
 
@@ -41,7 +41,7 @@ public class JdbcTest {
                     return new User(
                             rs.getLong("id"),
                             rs.getString("name"),
-                            rs.getString("sex"));
+                            rs.getString("password"));
                 }
         );
     }

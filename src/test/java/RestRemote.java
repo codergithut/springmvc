@@ -32,9 +32,9 @@ public class RestRemote {
     @Test
     public void test(){
         User user=restBean.someRestCall(1l);
-        System.out.println(user.getSex());
+        System.out.println(user.getPassword());
         User user1=restTemplateBuilder.build().getForObject("http://localhost:8081", User.class, 1l);
-        System.out.println(user1.getSex());
+        System.out.println(user1.getPassword());
     }
 
 

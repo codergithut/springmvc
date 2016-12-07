@@ -5,4 +5,6 @@ package webSource.sql;
  */
 public interface HqlData {
     String SQL_SERVER="select user from User user where user.id = ?";
+
+    String SQL_USER="select user from User user where user.name = ?";
 }

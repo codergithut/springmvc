@@ -33,4 +33,7 @@ public interface JpaRepositoryBean extends CrudRepository<User, Long>,HqlData {
 
     @Cacheable(value="user1")
     Iterable<User> findAll();
+
+    @Query(SQL_USER)
+    User findByUsername(String username);
 }

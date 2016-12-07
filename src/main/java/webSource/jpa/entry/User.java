@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class User {
     private Long id ;
     private String name;
-    private String sex ;
+    private String password ;
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -36,18 +36,14 @@ public class User {
         this.name = name;
     }
 
-    @Column(name="sex")
-    public String getSex() {
-        return sex;
-    }
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
+    @Column(name="password")
+    public String getPassword() {return password;}
+    public void setPassword(String password) {this.password = password;}
 
-    public User(Long id,String name,String sex){
+    public User(Long id,String name,String password){
         this.id=id;
         this.name=name;
-        this.sex=sex;
+        this.password=password;
     }
 
     public User(){
