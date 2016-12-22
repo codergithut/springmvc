@@ -1,4 +1,4 @@
-package webSource.configuration;
+package webSource.remoterest;
 
 import org.springframework.boot.autoconfigure.cache.CacheManagerCustomizer;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;

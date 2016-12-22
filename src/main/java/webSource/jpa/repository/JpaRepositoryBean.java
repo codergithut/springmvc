@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 import webSource.jpa.entry.User;
-import webSource.sql.HqlData;
+import webSource.jdbc.sql.HqlData;
 
 /**
  * Created by Administrator on 2016/11/30.

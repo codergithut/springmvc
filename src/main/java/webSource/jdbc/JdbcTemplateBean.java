@@ -6,7 +6,7 @@ package webSource.jdbc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import webSource.sql.SqlData;
+import webSource.jdbc.sql.SqlData;
 
 @Component
 public class JdbcTemplateBean implements SqlData{

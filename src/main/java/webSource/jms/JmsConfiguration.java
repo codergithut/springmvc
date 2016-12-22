@@ -1,4 +1,4 @@
-package webSource.configuration;
+package webSource.jms;
 
 import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
 import org.springframework.context.annotation.Bean;

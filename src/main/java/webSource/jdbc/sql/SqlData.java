@@ -1,4 +1,4 @@
-package webSource.sql;
+package webSource.jdbc.sql;
 
 /**
  * Created by Administrator on 2016/12/1.

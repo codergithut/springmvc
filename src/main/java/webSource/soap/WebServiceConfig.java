@@ -1,4 +1,4 @@
-package webSource.configuration;
+package webSource.soap;
 
 /**
  * Created by Administrator on 2016/12/21.
@@ -24,10 +24,5 @@ public class WebServiceConfig {
         EndpointImpl endpoint = new EndpointImpl(bus, new HelloServiceImpl());
         endpoint.publish("/Hello");
         return endpoint;
-    }
-
-    @Bean
-    public ServletRegistrationBean dispatcherServlet() {
-        return new ServletRegistrationBean(new CXFServlet(), "/soap/*");
     }
 }

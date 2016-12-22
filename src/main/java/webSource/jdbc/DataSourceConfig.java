@@ -1,4 +1,4 @@
-package webSource.configuration;
+package webSource.jdbc;
 
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 /**
  * Created by Administrator on 2016/12/7.
  */
-public class ConfigBean
+public class DataSourceConfig
 {
     @Bean
     @Primary

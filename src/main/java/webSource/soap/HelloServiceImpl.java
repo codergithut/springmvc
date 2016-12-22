@@ -1,5 +1,7 @@
 package webSource.soap;
 
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,6 +9,7 @@ import java.util.Map;
 /**
  * Created by Administrator on 2016/12/21.
  */
+@EnableGlobalMethodSecurity(prePostEnabled=false)
 public class HelloServiceImpl implements HelloService {
     private Map<Long, Hello> userMap = new HashMap<Long, Hello>();
     public HelloServiceImpl() {
