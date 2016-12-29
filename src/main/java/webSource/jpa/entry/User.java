@@ -17,6 +17,7 @@ public class User {
     private Long id ;
     private String name;
     private String password ;
+    private long group_id;
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -27,6 +28,10 @@ public class User {
     public void setId(Long id) {
         this.id = id;
     }
+
+    @Column(name="group_id")
+    public long getGroup_id() {return group_id;}
+    public void setGroup_id(long group_id) {this.group_id = group_id;}
 
     @Column(name="name")
     public String getName() {

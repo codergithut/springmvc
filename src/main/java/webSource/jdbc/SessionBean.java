@@ -1,4 +1,4 @@
-package webSource.configuration;
+package webSource.jdbc;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.jpa.HibernateEntityManagerFactory;

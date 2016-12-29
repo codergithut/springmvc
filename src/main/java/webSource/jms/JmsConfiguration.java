@@ -28,7 +28,4 @@ class JmsConfiguration {
         return factory;
     }
 
-
-
-
 }

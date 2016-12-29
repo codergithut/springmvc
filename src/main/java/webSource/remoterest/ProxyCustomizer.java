@@ -1,4 +1,4 @@
-package webSource.configuration;
+package webSource.remoterest;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
