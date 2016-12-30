@@ -1,8 +1,7 @@
 package webSource.controller.rest;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
+import webSource.jpa.entry.User;
+import webSource.mybatis.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +37,9 @@ public class RestControllerDemo {
     JpaRepositoryBean testRepository;
 
     @Autowired
+    UserMapper userMapper;
+
+    @Autowired
     JavaMailSender mailSender;
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
@@ -49,7 +51,17 @@ public class RestControllerDemo {
 
         users.add(getResource.getWealthByUrlResource());
 
-        users.add(testRepository.readUserByQueryAndCache(id));
+        users.add(userMapper.findUserByName("11"));
+
+        users.add(userMapper.findUserByNameByAnnotation("11"));
+
+        User user=new User();
+        user.setGroup_id(99999);
+        user.setName("test");
+        user.setPassword("test");
+        userMapper.insertUserByRandom(user);
+
+        //users.add(testRepository.readUserByQueryAndCache(id));
 
         return users;
     }
