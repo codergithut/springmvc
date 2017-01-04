@@ -1,5 +1,6 @@
 package webSource.controller.rest;
 
+import webSource.annotation.getTime;
 import webSource.jpa.entry.User;
 import webSource.mybatis.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,7 @@ public class RestControllerDemo {
     @Autowired
     JavaMailSender mailSender;
 
+    @getTime
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
     public List<Object> getUser(@PathVariable Long id) throws IOException {
 
@@ -59,7 +61,8 @@ public class RestControllerDemo {
         user.setGroup_id(99999);
         user.setName("test");
         user.setPassword("test");
-        userMapper.insertUserByRandom(user);
+        System.out.println("sssssssssssssssss");
+//      userMapper.insertUserByRandom(user);
 
         //users.add(testRepository.readUserByQueryAndCache(id));
 
