@@ -43,7 +43,6 @@ public class RestControllerDemo {
     @Autowired
     JavaMailSender mailSender;
 
-    @getTime
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
     public List<Object> getUser(@PathVariable Long id) throws IOException {
 
@@ -62,10 +61,18 @@ public class RestControllerDemo {
         user.setName("test");
         user.setPassword("test");
         System.out.println("sssssssssssssssss");
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 //      userMapper.insertUserByRandom(user);
 
         //users.add(testRepository.readUserByQueryAndCache(id));
 
         return users;
     }
+
 }

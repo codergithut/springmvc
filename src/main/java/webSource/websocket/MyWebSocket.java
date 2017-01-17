@@ -21,14 +21,18 @@ public class MyWebSocket {
 
     private static int onlineCount = 0;
 
+    private String name;
+
     private static CopyOnWriteArraySet<MyWebSocket> webSocketSet = new CopyOnWriteArraySet<>();
 
     private Session session;
 
     @OnOpen
     public void onOpen (Session session){
+        name=session.getId();
         this.session = session;
         webSocketSet.add(this);
+
         addOnlineCount();
         System.out.println("有新链接加入!当前在线人数为" + getOnlineCount());
     }
@@ -45,7 +49,12 @@ public class MyWebSocket {
         System.out.println("来自客户端的消息:" + message);
         // 群发消息
         for ( MyWebSocket item : webSocketSet ){
-            item.sendMessage(message);
+            if(!item.name.equals(name)){
+                item.sendMessage(message);
+            }
+            else{
+                item.sendMessage("message is send");
+            }
         }
     }
 

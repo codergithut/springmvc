@@ -3,6 +3,7 @@ package webSource.annotation;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,11 +13,23 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Aspect
+@Async
 public class getTimeAspect {
     long start=0;
     long end=0;
     @Pointcut(value = "@annotation(webSource.annotation.getTime)")
     private void cut() { }
+
+    @Before("cut()")
+    public void getStartSystemTime(JoinPoint joinPoint){
+        start=System.currentTimeMillis();
+    }
+
+    @AfterReturning("cut()")
+    public void getEndSystemTime(JoinPoint joinPoint){
+        end=System.currentTimeMillis();
+        System.out.println(joinPoint.getSignature().getDeclaringTypeName()+ "." + joinPoint.getSignature().getName()+"执行时间"+(end-start)/1000+"s");
+    }
 
     @Around("cut()")
     public void advice(ProceedingJoinPoint joinPoint){
@@ -29,15 +42,6 @@ public class getTimeAspect {
         System.out.println("环绕通知之结束");
     }
 
-    @Before("cut()")
-    public void getStartSystemTime(JoinPoint joinPoint){
-        start=System.currentTimeMillis();
-    }
 
-    @AfterReturning("cut()")
-    public void getEndSystemTime(JoinPoint joinPoint){
-        end=System.currentTimeMillis();
-        System.out.println(joinPoint.getSignature().getDeclaringTypeName()+ "." + joinPoint.getSignature().getName()+"执行时间"+(end-start)/1000+"s");
-    }
 
 }

@@ -6,7 +6,9 @@
 
     <groupId>com.springboot.mvc.demo</groupId>
     <artifactId>springmvc</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT-${timestamp}</version>
+
+    <packaging>war</packaging>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
