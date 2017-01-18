@@ -71,7 +71,9 @@ public class RestControllerDemo {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         //userMapper.insertUserByRandom(user);
+
         users.add(testRepository.readUserByQueryAndCache(id));
         return users;
     }

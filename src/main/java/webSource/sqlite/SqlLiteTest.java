@@ -20,9 +20,6 @@ public class SqlLiteTest {
     @Qualifier("secondaryDataSource")
     DataSource sqlitedataSource;
 
-
-
-
     public void testSqlLite(){
         try {
             Object obj=sqlitedataSource.getConnection().prepareStatement("select * from t1");
