@@ -1,22 +1,23 @@
 package webSource.mybatis.configuration;
 
-import com.github.pagehelper.PageHelper;
-import org.apache.ibatis.plugin.Interceptor;
+import kotlin.reflect.jvm.internal.impl.javax.inject.Named;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.TransactionManagementConfigurer;
-
-import javax.annotation.Resource;
 import javax.sql.DataSource;
-import java.util.Properties;
+
+
 
 /**
  * @author <a href="mailto:Administrator@gtmap.cn">Administrator</a>
@@ -26,9 +27,14 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 public class MybatisConfig implements TransactionManagementConfigurer {
-    @Resource
-    private DataSource dataSource;
 
+    @Bean(name="primary")
+    @Primary
+    @ConfigurationProperties(prefix="datasource.primary")
+    public DataSource DataSource() {
+        System.out.println("-------------------- secondaryDataSource init ---------------------");
+        return DataSourceBuilder.create().build();
+    }
     /**
      * 可以通过这个类,详细配置mybatis
      * @return
@@ -37,7 +43,7 @@ public class MybatisConfig implements TransactionManagementConfigurer {
     public SqlSessionFactory sqlSessionFactoryBean() {
 
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
-        bean.setDataSource(dataSource);
+        bean.setDataSource(DataSource());
 
         //模型对象会默认在这个路径下
         bean.setTypeAliasesPackage("webSource.jpa.entry");
@@ -79,6 +85,6 @@ public class MybatisConfig implements TransactionManagementConfigurer {
     @Bean(name = "transactionManager")
     @Override
     public PlatformTransactionManager annotationDrivenTransactionManager() {
-        return new DataSourceTransactionManager(dataSource);
+        return new DataSourceTransactionManager(DataSource());
     }
 }

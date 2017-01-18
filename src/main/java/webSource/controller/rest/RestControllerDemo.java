@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import webSource.jpa.repository.JpaRepositoryBean;
+import webSource.sqlite.SqlLiteTest;
 import webSource.tool.GetUrlResource;
 
 import java.io.IOException;
@@ -43,6 +44,9 @@ public class RestControllerDemo {
     @Autowired
     JavaMailSender mailSender;
 
+    @Autowired
+    SqlLiteTest sqlLiteTest;
+
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
     public List<Object> getUser(@PathVariable Long id) throws IOException {
 
@@ -60,18 +64,15 @@ public class RestControllerDemo {
         user.setGroup_id(99999);
         user.setName("test");
         user.setPassword("test");
-        System.out.println("sssssssssssssssss");
+        sqlLiteTest.testSqlLite();
 
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-//      userMapper.insertUserByRandom(user);
-
-        //users.add(testRepository.readUserByQueryAndCache(id));
-
+        //userMapper.insertUserByRandom(user);
+        users.add(testRepository.readUserByQueryAndCache(id));
         return users;
     }
 
