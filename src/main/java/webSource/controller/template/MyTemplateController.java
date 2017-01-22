@@ -35,4 +35,9 @@ public class MyTemplateController {
         return "template";
     }
 
+    @RequestMapping(value="websocket", method= RequestMethod.GET)
+    public String webSocket(Map<String,Object> model) {
+        return "websocket";
+    }
+
 }

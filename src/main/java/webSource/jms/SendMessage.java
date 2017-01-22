@@ -23,6 +23,7 @@ public class SendMessage {
 
 
     public void sendMessageTest(String message) throws JMSException {
+        System.out.println("I send message");
         jmsTemplate.convertAndSend("someQueue", message);
     }
 

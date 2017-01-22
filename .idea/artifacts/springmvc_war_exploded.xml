@@ -148,6 +148,17 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-messaging:4.3.4.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-websocket:4.3.4.RELEASE" />
           <element id="library" level="project" name="Maven: org.xerial:sqlite-jdbc:3.16.1" />
+          <element id="library" level="project" name="Maven: org.apache.activemq:activemq-stomp:5.8.0" />
+          <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-core:2.7" />
+          <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-api:2.6.2" />
+          <element id="library" level="project" name="Maven: io.projectreactor:reactor-core:2.0.7.RELEASE" />
+          <element id="library" level="project" name="Maven: org.reactivestreams:reactive-streams:1.0.0" />
+          <element id="library" level="project" name="Maven: io.projectreactor:reactor-net:2.0.7.RELEASE" />
+          <element id="library" level="project" name="Maven: io.projectreactor:reactor-bus:2.0.8.RELEASE" />
+          <element id="library" level="project" name="Maven: com.goldmansachs:gs-collections:5.1.0" />
+          <element id="library" level="project" name="Maven: com.goldmansachs:gs-collections-api:5.1.0" />
+          <element id="library" level="project" name="Maven: io.projectreactor:reactor-stream:2.0.8.RELEASE" />
+          <element id="library" level="project" name="Maven: io.netty:netty-all:4.0.33.Final" />
         </element>
       </element>
       <element id="directory" name="META-INF">
