@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
-import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 
 /**
  * @author <a href="mailto:Administrator@gtmap.cn">Administrator</a>
@@ -23,7 +22,7 @@ public class WebSocketStompConfig extends AbstractWebSocketMessageBrokerConfigur
     }
 
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableStompBrokerRelay("/queue","/topic","/someQueue");
+        registry.enableStompBrokerRelay("/queue","/topic");
         registry.setApplicationDestinationPrefixes("/app");
     }
 

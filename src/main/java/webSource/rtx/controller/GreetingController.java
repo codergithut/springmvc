@@ -2,17 +2,12 @@ package webSource.rtx.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import webSource.jms.ReceiveMessage;
-import webSource.jms.SendMessage;
 
-import javax.annotation.Resource;
 import javax.jms.JMSException;
-import java.util.Map;
+import java.security.Principal;
 
 /**
  * @author <a href="mailto:Administrator@gtmap.cn">Administrator</a>
@@ -22,21 +17,27 @@ import java.util.Map;
 @Controller
 public class GreetingController {
 
+    @Autowired
+    SimpMessageSendingOperations messageTemp;
+
     @RequestMapping("/helloSocket")
     public String index(){
-        return "/websocket";
+        return "chart/websocket";
     }
 
 
+    //根据文本内容简单的把文本发给提到的用户
     @MessageMapping("/change-notice")
-    @SendTo("/topic/notice")
-    public String greeting(String value) throws InterruptedException, JMSException {
-        return value;
+    public void greeting(String value,Principal principal) throws InterruptedException, JMSException {
+        if(value.contains("user")){
+            messageTemp.convertAndSendToUser("user","/queue/notifications",value);
+        }
+        if(value.contains("admin")){
+            messageTemp.convertAndSendToUser("admin","/queue/notifications",value);
+        }
+
     }
 
-    @RequestMapping(value="recwebsocket", method= RequestMethod.GET)
-    public String recWebSocket(Map<String,Object> model) {
-        return "received";
-    }
+
 
 }

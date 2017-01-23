@@ -12,7 +12,6 @@
 Welcome<br/>
 <div>
     <div>
-        <button id="connect" onclick="connect();">Connect</button>
         <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
     </div>
     <div id="conversationDiv">
@@ -24,11 +23,21 @@ Welcome<br/>
         </p>
         <button id="sendName" onclick="sendName();">Send</button>
         <p id="response"></p>
-    </div>
 </div>
 </body>
 
 <script>
+
+    var s = new SockJS('http:localhost:8080/socket');
+    var stomp = Stomp.over(s);
+
+    stomp.connect('guest', 'guest', function(frame) {
+        console.log('*****  Connected  *****');
+        stomp.subscribe("/topic/spittlefeed", handleSpittle);
+        stomp.subscribe("/user/queue/notifications", handleNotification);
+    });
+
+
     var stompClient = null;
     function setConnected(connected) {
         document.getElementById('connect').disabled = connected;
@@ -37,17 +46,19 @@ Welcome<br/>
         document.getElementById('response').innerHTML = '';
     }
     // 开启socket连接
-    function connect() {
-        var socket = new SockJS('/socket');
-        stompClient = Stomp.over(socket);
-        stompClient.connect({}, function (frame) {
-            setConnected(true);
+    var sock = new SockJS("http://localhost:8080/socket");
+    var stomp = Stomp.over(sock);
+
+    stomp.connect('guest', 'guest', function(frame) {
+        stomp.subscribe("/user/queue/notifications", function (data) {
+            alert(data.body);
         });
-    }
+    });
+
     // 断开socket连接
     function disconnect() {
-        if (stompClient != null) {
-            stompClient.disconnect();
+        if (stomp != null) {
+            stomp.disconnect();
         }
         setConnected(false);
         console.log("Disconnected");
@@ -55,8 +66,7 @@ Welcome<br/>
     // 向‘/app/change-notice’服务端发送消息
     function sendName() {
         var value = document.getElementById('name').value;
-        stompClient.send("/app/change-notice", {}, value);
+        stomp.send("/app/change-notice", {}, value);
     }
-    connect();
 </script>
 </html>
