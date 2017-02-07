@@ -17,7 +17,7 @@ import java.sql.SQLException;
 public class SqlLiteTest {
 
     @Autowired
-    @Qualifier("secondaryDataSource")
+    @Qualifier("SecondaryDataSource")
     DataSource sqlitedataSource;
 
     public void testSqlLite(){

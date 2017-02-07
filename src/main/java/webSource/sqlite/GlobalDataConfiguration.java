@@ -14,10 +14,10 @@ import javax.sql.DataSource;
  */
 @Configuration
 public class GlobalDataConfiguration {
-    @Bean(name="secondaryDataSource")
+    @Bean(name="SecondaryDataSource")
     @ConfigurationProperties(prefix="datasource.secondary")
     public DataSource secondaryDataSource() {
-        System.out.println("-------------------- secondaryDataSource init ---------------------");
+        System.out.println("-------------------- SecondaryDataSource init ---------------------");
         return DataSourceBuilder.create().build();
     }
 }
