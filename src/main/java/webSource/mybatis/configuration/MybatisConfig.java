@@ -32,7 +32,7 @@ public class MybatisConfig implements TransactionManagementConfigurer {
     @Primary
     @ConfigurationProperties(prefix="datasource.primary")
     public DataSource DataSource() {
-        System.out.println("-------------------- secondaryDataSource init ---------------------");
+        System.out.println("-------------------- firstDataSource init ---------------------");
         return DataSourceBuilder.create().build();
     }
     /**
