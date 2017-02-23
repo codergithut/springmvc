@@ -131,25 +131,17 @@
             <artifactId>cxf-spring-boot-starter-jaxrs</artifactId>
             <version>3.1.7</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>3.2.8.RELEASE</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-            <version>3.2.8.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-support</artifactId>
-            <version>2.0.8</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-            <version>3.2.8.RELEASE</version>
+            <artifactId>spring-tx</artifactId>
+            <version>4.1.5.RELEASE</version>
         </dependency>
 
         <dependency>
