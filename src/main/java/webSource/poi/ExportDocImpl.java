@@ -55,7 +55,7 @@ public class ExportDocImpl
                     }
                 }
                 if(pros.size()>0){
-                    entity=new EntityUtil(className,className,pros);
+                    entity = new EntityUtil(className,className,pros);
                     entity.getBeanByData();
                     entity.getSqlByData();
                 }
@@ -68,8 +68,8 @@ public class ExportDocImpl
     private String getTdValue(TableCell tableCell){
         String result=null;
         for(int k=0;k<tableCell.numParagraphs();k++){
-            Paragraph para =tableCell.getParagraph(k);
-             result= para.text().trim();
+            Paragraph para = tableCell.getParagraph(k);
+             result = para.text().trim();
         }
         return result;
     }

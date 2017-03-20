@@ -15,11 +15,11 @@ public class FileOperation {
      * @return
      */
     public static boolean createFile(File fileName)throws Exception{
-        boolean flag=false;
+        boolean flag = false;
         try{
             if(!fileName.exists()){
                 fileName.createNewFile();
-                flag=true;
+                flag = true;
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -40,7 +40,7 @@ public class FileOperation {
             fileReader=new FileReader(fileName);
             bufferedReader=new BufferedReader(fileReader);
             try{
-                String read=null;
+                String read = null;
                 while((read=bufferedReader.readLine())!=null){
                     result=result+read+"\r\n";
                 }
@@ -65,7 +65,7 @@ public class FileOperation {
     public static boolean writeTxtFile(String content,File  fileName)throws Exception{
         RandomAccessFile mm=null;
         boolean flag=false;
-        FileOutputStream o=null;
+        FileOutputStream o = null;
         try {
             o = new FileOutputStream(fileName);
             o.write(content.getBytes("utf-8"));
