@@ -64,7 +64,10 @@ public class EntityUtil {
                 "(");
         StringBuffer content = new StringBuffer();
         for(Propertie pro:properties){
-            content.append("\t"+pro.formString(pro.getPropertiesName())+"\t\t"+pro.formString(pro.getReflexPropertiesSqlType()+"("+pro.getPropertiesNumber()+")")+(pro.getPropertiesConstraint().equals("M")?"\t\tnot null,\n":",\n"));
+            content.append("\t"+pro.formString(pro.getPropertiesName(),8)+"\t\t"
+                    +pro.formString(pro.getReflexPropertiesSqlType()+"("+pro.getPropertiesNumber()+")"
+                    +(pro.getPropertiesConstraint().equals("M")?"":","),8)
+                    +(pro.getPropertiesConstraint().equals("M")?"\t\tnot null,":"")+"\n");
         }
         String contents = content.toString();
         sqlString.append(contents.toString().substring(0,contents.length()-2)+"\n);\n\n");
@@ -129,11 +132,11 @@ public class EntityUtil {
             return reflexSqlType.get(getPropertiesType());
         }
 
-        private String formString(String param){
+        private String formString(String param,int len){
             StringBuffer realSqlName = new StringBuffer();
             realSqlName.append(param);
-            if(param.length()<8){
-                for(int i=0;i<8-param.length();i++){
+            if(param.length()<len){
+                for(int i=0;i<len-param.length();i++){
                     realSqlName.append(" ");
                 }
             }
