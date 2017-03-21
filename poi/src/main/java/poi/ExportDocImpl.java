@@ -1,21 +1,21 @@
-package webSource.poi;
+package poi;
 
 /**
  * @author <a href="mailto:Administrator@gtmap.cn">Administrator</a>
  * @version 1.0, 2017/3/17
  * @description
  */
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
 
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
 import org.apache.poi.hwpf.usermodel.*;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExportDocImpl
 {
