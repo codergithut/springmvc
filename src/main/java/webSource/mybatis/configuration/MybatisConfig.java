@@ -4,6 +4,8 @@ import kotlin.reflect.jvm.internal.impl.javax.inject.Named;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +18,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 import javax.sql.DataSource;
-
+import java.sql.SQLException;
 
 
 /**
@@ -28,12 +30,14 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 public class MybatisConfig implements TransactionManagementConfigurer {
 
-    @Bean(name="primary")
     @Primary
+    @Bean(name = "primaryDataSource")
+    @Qualifier("primaryDataSource")
     @ConfigurationProperties(prefix="datasource.primary")
     public DataSource DataSource() {
         System.out.println("-------------------- firstDataSource init ---------------------");
-        return DataSourceBuilder.create().build();
+        DataSource dataSource=DataSourceBuilder.create().build();
+        return dataSource;
     }
     /**
      * 可以通过这个类,详细配置mybatis
@@ -44,7 +48,6 @@ public class MybatisConfig implements TransactionManagementConfigurer {
 
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(DataSource());
-
         //模型对象会默认在这个路径下
         bean.setTypeAliasesPackage("webSource.jpa.entry");
         //分页插件,插件无非是设置mybatis的拦截器

@@ -18,6 +18,7 @@ public class GlobalDataConfiguration {
     @ConfigurationProperties(prefix="datasource.secondary")
     public DataSource secondaryDataSource() {
         System.out.println("-------------------- SecondaryDataSource init ---------------------");
-        return DataSourceBuilder.create().build();
+        DataSource dataSource=DataSourceBuilder.create().build();
+        return dataSource;
     }
 }

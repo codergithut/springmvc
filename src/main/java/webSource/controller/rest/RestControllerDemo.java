@@ -1,5 +1,6 @@
 package webSource.controller.rest;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import webSource.annotation.getTime;
 import webSource.jpa.entry.User;
 import webSource.mybatis.UserMapper;
@@ -13,7 +14,9 @@ import webSource.jpa.repository.JpaRepositoryBean;
 import webSource.sqlite.SqlLiteTest;
 import webSource.tool.GetUrlResource;
 
+import javax.sql.DataSource;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +38,11 @@ import java.util.List;
 @RestController
 @RequestMapping(value="/rest")
 public class RestControllerDemo {
+
+    @Autowired
+    DataSource dataSource;
+
+
     @Autowired
     JpaRepositoryBean testRepository;
 
@@ -48,7 +56,7 @@ public class RestControllerDemo {
     SqlLiteTest sqlLiteTest;
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
-    public List<Object> getUser(@PathVariable Long id) throws IOException {
+    public List<Object> getUser(@PathVariable Long id) throws IOException, SQLException {
 
         List<Object> users=new ArrayList<Object>();
 
@@ -60,21 +68,6 @@ public class RestControllerDemo {
 
         users.add(userMapper.findUserByNameByAnnotation("11"));
 
-        User user=new User();
-        user.setGroup_id(99999);
-        user.setName("test");
-        user.setPassword("test");
-        sqlLiteTest.testSqlLite();
-
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        //userMapper.insertUserByRandom(user);
-
-        users.add(testRepository.readUserByQueryAndCache(id));
         return users;
     }
 
