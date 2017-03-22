@@ -1,8 +1,12 @@
 package webSource.quartz;
 
+import org.dom4j.DocumentException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
+import webSource.rabbitmq.service.FileService;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -13,13 +17,19 @@ import java.util.Date;
 @Configurable
 public class ScheduledTasks{
 
-    public void reportCurrentTime(){
-        System.out.println ("Scheduling Tasks Examples: The time is now " + dateFormat ().format (new Date()));
+    @Autowired
+    FileService fileService;
+    public void reportCurrentTime() throws DocumentException, IOException {
+        System.out.println("service is begin");
+        fileService.handleFileUpload();
+        System.out.println("Service is end");
     }
 
 
-    public void reportCurrentByCron(){
-        System.out.println ("Scheduling Tasks Examples By Cron: The time is now " + dateFormat ().format (new Date ()));
+    public void reportCurrentByCron() throws DocumentException, IOException {
+        System.out.println("service is begin");
+        fileService.handleFileUpload();
+        System.out.println("Service is end");
     }
 
     private SimpleDateFormat dateFormat(){

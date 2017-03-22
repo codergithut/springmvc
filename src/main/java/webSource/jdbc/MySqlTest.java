@@ -22,7 +22,6 @@ import java.util.*;
 public class MySqlTest {
 
     @Autowired
-    @Qualifier("FirstDataSource")
     DataSource mysqlDataSource;
 
     public Object testSqlLite(){

@@ -6,11 +6,15 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="springmvc" />
+        <module name="lucene" />
+        <module name="poi" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="lucene" target="1.8" />
+      <module name="poi" target="1.8" />
       <module name="springmvc" target="1.8" />
+      <module name="wechart" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
