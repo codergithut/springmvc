@@ -6,8 +6,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import webSource.Example;
-import webSource.jms.ReceiveMessage;
-import webSource.jms.SendMessage;
 
 /**
  * Created by Administrator on 2016/12/1.
