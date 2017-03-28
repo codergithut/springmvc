@@ -5,6 +5,7 @@ import junit.framework.TestCase;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.SimpleAnalyzer;
 import org.apache.lucene.analysis.WhitespaceAnalyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexWriter;
@@ -29,16 +30,9 @@ public class PhraseQueryTest extends TestCase {
     private Analyzer analyzer;
 
     protected void setUp() throws IOException {
-        dir = TestUtil.getBookIndexDirectory();
-        IndexWriter writer = new IndexWriter(dir, new WhitespaceAnalyzer(),
-                IndexWriter.MaxFieldLength.UNLIMITED);
-        Document doc = new Document();
-        doc.add(new Field("field", "the quick brown fox jumped over the lazy dog",
-                Field.Store.YES, Field.Index.ANALYZED));
-        writer.addDocument(doc);
-        writer.close();
-        searcher = new IndexSearcher(dir);
         analyzer = new WhitespaceAnalyzer();
+        dir = TestUtil.getBookIndexDirectory();
+        searcher = new IndexSearcher(dir);
     }
 
     protected void tearDown() throws IOException {
@@ -82,8 +76,8 @@ public class PhraseQueryTest extends TestCase {
         assertTrue("bingo", matched(new String[] {"lazy", "jumped", "quick"}, 8));
     }
 
-    private void indexSingleFieldDocs(Field[] fields) throws IOException {
-        IndexWriter writer = new IndexWriter(dir, new WhitespaceAnalyzer(),
+    private void indexSingleFieldDocs(Field[] fields,Directory directory) throws IOException {
+        IndexWriter writer = new IndexWriter(directory, new WhitespaceAnalyzer(),
                 IndexWriter.MaxFieldLength.UNLIMITED);
         for(Field f : fields){
             Document doc = new Document();
@@ -95,15 +89,16 @@ public class PhraseQueryTest extends TestCase {
     }
 
     public void testWildcard() throws IOException {
+        Directory directory = new RAMDirectory();
         indexSingleFieldDocs(new Field[]
                 {
                         new Field("contents", "wild", Field.Store.YES, Field.Index.ANALYZED ),
                         new Field("contents", "child", Field.Store.YES, Field.Index.ANALYZED),
                         new Field("contents", "mild", Field.Store.YES, Field.Index.ANALYZED),
                         new Field("contents", "mildew", Field.Store.YES, Field.Index.ANALYZED)
-                });
+                }, directory);
 
-        IndexSearcher searcher = new IndexSearcher(dir);
+        IndexSearcher searcher = new IndexSearcher(directory);
         Query query = new WildcardQuery(new Term("contents", "?ild*"));
         TopDocs matches = searcher.search(query, 10);
         assertEquals("child no match", 3, matches.totalHits);
@@ -113,11 +108,12 @@ public class PhraseQueryTest extends TestCase {
     }
 
     public void testFuzzy() throws IOException {
+        Directory directory = new RAMDirectory();
         indexSingleFieldDocs( new Field[]{
                         new Field("contents", "fuzzy", Field.Store.YES, Field.Index.ANALYZED ),
                         new Field("contents", "wuzzy", Field.Store.YES, Field.Index.ANALYZED)
-        });
-        IndexSearcher searcher = new IndexSearcher(dir);
+        }, directory);
+        IndexSearcher searcher = new IndexSearcher(directory);
         Query query = new FuzzyQuery(new Term("contents", "wuzza"));
         TopDocs matches = searcher.search(query, 10);
         assertEquals("both close enought", 2, matches.totalHits);
@@ -150,8 +146,53 @@ public class PhraseQueryTest extends TestCase {
         matches = searcher.search(query, 10);
 
         assertFalse(TestUtil.hitsIncludeTitle(searcher, matches, "Tapestry in Action"));
+    }
 
+    public void testLowercasing() throws ParseException {
+        Query q = new QueryParser(Version.LUCENE_30, "field", analyzer).parse("PrefixQuery*");
+
+        assertEquals("lowercased", "prefixquery*", q.toString("field"));
+
+        QueryParser qp = new QueryParser(Version.LUCENE_30, "field", analyzer);
+        qp.setLowercaseExpandedTerms(false);
+        q = qp.parse("PrefixQuery");
+        assertEquals("not lowercased", "PrefixQuery", q.toString("field"));
 
     }
+
+    public void testPhraseQuery() throws ParseException {
+        Query q = new QueryParser(Version.LUCENE_30, "field", new StandardAnalyzer(Version.LUCENE_30))
+                .parse("\"this is Some Phrase*\"");
+        assertEquals("analyzed", "\"? ? some phrase\"", q.toString("field"));
+    }
+
+    public void testlop() throws ParseException {
+        Query q = new QueryParser(Version.LUCENE_30, "field", analyzer).parse("\"exact phrase\"");
+        assertEquals("zero slop", "\"exact phrase\"", q.toString("field"));
+        QueryParser qp = new QueryParser(Version.LUCENE_30, "field", analyzer);
+        qp.setPhraseSlop(5);
+        q = qp.parse("\"sloppy phrase\"");
+        assertEquals("sloppy, implicitly", "\"sloppy phrase\"~5", q.toString("field"));
+    }
+
+    public void testFuzzyQuery() throws ParseException {
+        QueryParser parser = new QueryParser(Version.LUCENE_30, "subject", analyzer);
+        Query query = parser.parse("kountry~");
+        System.out.println("fuzzy: " + query);
+        query = parser.parse("kountry~0.7");
+        System.out.println("fuzzy 2: "+ query);
+    }
+
+    public void testGrouping() throws ParseException, IOException {
+        Query query = new QueryParser(Version.LUCENE_30, "subject", analyzer)
+                .parse("(agile OR extreme) AND methodology");
+        TopDocs matches = searcher.search(query, 10);
+
+        assertTrue(TestUtil.hitsIncludeTitle(searcher, matches, "Extreme Programming Explained"));
+
+        assertTrue(TestUtil.hitsIncludeTitle(searcher, matches, "The Pragmatic Programmer"));
+    }
+
+
 
 }
