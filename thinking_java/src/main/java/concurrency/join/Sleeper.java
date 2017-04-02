@@ -14,6 +14,7 @@ public class Sleeper extends Thread {
     @Override
     public void run() {
         try {
+            System.out.println(getName() + "Thread is sleep");
             sleep(duration);
         } catch (InterruptedException e) {
             System.out.println(getName() + " was interrupted. " + "isInterrupted(): " + isInterrupted());
