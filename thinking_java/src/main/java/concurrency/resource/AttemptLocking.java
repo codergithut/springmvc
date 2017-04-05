@@ -34,4 +34,24 @@ public class AttemptLocking {
             }
         }
     }
+
+    public static void main(String[] args) {
+        final AttemptLocking al = new AttemptLocking();
+        al.timed();
+        al.untimed();
+
+        new Thread() {
+            {
+                setDaemon(true);
+            }
+            public void run() {
+                al.lock.lock();
+                System.out.println("acquired");
+            }
+        }.start();
+        Thread.yield();
+        al.timed();
+        al.untimed();
+
+    }
 }
